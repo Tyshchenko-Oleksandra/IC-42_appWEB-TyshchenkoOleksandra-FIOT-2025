@@ -1,0 +1,216 @@
+/* appweb.css */
+
+/* Базові стилі */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+body {
+    background-color: #171414;
+    color: #FFFFFF;
+    line-height: 1.6;
+    padding: 20px;
+    min-height: 100vh;
+    position: relative;
+    overflow-y: auto; /* Додаємо вертикальний скрол */
+}
+
+/* Основной контейнер */
+.main-container {
+    width: 1440px; /* W 1440 */
+    height: 1024px; /* H 1024 */
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Шапка - точні стилі з Figma */
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    padding-top: 50px;
+}
+
+header h1 {
+    font-size: 64px;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 300;
+    font-style: italic;
+    color: #FFFFFF;
+    margin-bottom: 5px;
+    line-height: auto;
+    letter-spacing: 0;
+    width: 257px;
+    height: 64px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Підзаголовок - точні стилі з Figma */
+.subtitle {
+    font-size: 16px;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 300;
+    font-style: italic;
+    color: #FFFFFF;
+    line-height: auto;
+    letter-spacing: 0;
+    width: 183px;
+    height: 24px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Контейнер для карток */
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 300px);
+    gap: 146px;
+    max-width: 1246px;
+    margin: 0 auto;
+    padding: 60px 20px 20px 20px;
+    justify-content: center;
+}
+
+/* Картка товару - точні стилі з Figma */
+.card {
+    background: #51443E;
+    border-radius: 26px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    padding: 25px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    height: 420px;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-content {
+    transition: filter 0.3s;
+}
+
+.card:hover .card-content {
+    filter: blur(4px);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.card-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(81, 68, 62, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 20px;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 2;
+    filter: none; /* не розмиваємо текст */
+}
+
+.card:hover .card-overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Зображення кави - точні розміри */
+.card img {
+    width: 276px;
+    height: 276px;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+
+/* Назва кави - точні стилі з Figma */
+.card h3 {
+    font-size: 16px;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 300;
+    font-style: italic;
+    color: #FFFFFF;
+    line-height: 1.2;
+    letter-spacing: 0;
+    width: 237px;
+    height: 50px; /* Збільшено висоту для двох рядків тексту */
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Ціна - точні стилі з Figma */
+.card p {
+    font-size: 16px;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 600;
+    font-style: italic;
+    color: #FFFFFF;
+    line-height: auto;
+    letter-spacing: 0;
+    width: 75px;
+    height: 24px;
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Виправлення для третьої картки */
+.container > .card:nth-child(3) {
+    grid-column: 3; /* Примусово встановлюємо позицію в третій колонці */
+    grid-row: 1; /* Примусово встановлюємо перший рядок */
+}
+
+.coffee-bg {
+    position: absolute;
+    top: 500px;
+    left: -100px;
+    width: 577px;
+    height: 433px;
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 0;
+}
+.coffee-bg2 {
+    position: absolute;
+    top: -50px;
+    left: 1000px;
+    width: 577px;
+    height: 433px;
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.cart-icon {
+    position: absolute;
+    top: 140px;
+    right: 1270px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 10;
+}
