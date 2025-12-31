@@ -1,4 +1,3 @@
-// Ucoffee frontend: робота з Node.js API + MySQL, чистий варіант
 
 class CoffeeApp {
   constructor() {
@@ -23,7 +22,7 @@ class CoffeeApp {
     this.initSmoothScroll();
     this.updateAuthUI();
 
-    // Після ініціалізації завантажуємо товари з БД і малюємо каталог
+  
     await this.loadProductsFromAPI();
   }
 
