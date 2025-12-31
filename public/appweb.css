@@ -20,8 +20,6 @@ body {
     font-family: 'Montserrat Alternates', sans-serif;
     margin: 0;
     padding: 0;
-    /* Додаємо прозорість для зерен */
-    /* Можна зробити зерна прозорішими у самому PNG-файлі */
 }
 
 header {
@@ -52,7 +50,7 @@ header {
   font-size: 1.1rem;
   font-style: italic;
   color: #fff;
-  margin-top: 12px; /* Збільшує відступ вниз */
+  margin-top: 12px; 
   margin-left: 4px;
   position: relative;
 }
@@ -1856,7 +1854,7 @@ body.menu-open {
     #product-form .form-group input,
     #product-form .form-group textarea {
         padding: 12px 14px;
-        font-size: 16px; /* Запобігає масштабуванню на iOS */
+        font-size: 16px; 
     }
     
     #product-form-title {
