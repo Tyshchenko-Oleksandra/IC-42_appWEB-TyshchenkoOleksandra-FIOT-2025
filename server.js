@@ -1,10 +1,8 @@
-// server.js — версія під твою схему БД (users/full_name, roles, user_roles, orders.total_amount)
-
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const bcrypt = require('bcrypt');
-const db = require('./db'); // mysql2/promise пул
+const db = require('./db');
 
 const app = express();
 const PORT = 3000;
@@ -12,14 +10,12 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
-// статика з public/
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ======================
 //        USERS
 // ======================
-
-// POST /api/register – створення користувача + роль customer
 app.post('/api/register', async (req, res) => {
   const { name, email, password } = req.body || {};
 
@@ -28,7 +24,6 @@ app.post('/api/register', async (req, res) => {
   }
 
   try {
-    // чи існує такий email
     const [existing] = await db.query(
       'SELECT id FROM users WHERE email = ?',
       [email]
@@ -39,7 +34,6 @@ app.post('/api/register', async (req, res) => {
 
     const passwordHash = await bcrypt.hash(password, 10);
 
-    // вставляємо в users (full_name!)
     const [result] = await db.query(
       `INSERT INTO users (email, password_hash, full_name)
        VALUES (?, ?, ?)`,
@@ -48,7 +42,6 @@ app.post('/api/register', async (req, res) => {
 
     const userId = result.insertId;
 
-    // знаходимо id ролі "customer" і додаємо в user_roles
     try {
       const [roleRows] = await db.query(
         'SELECT id FROM roles WHERE name = ?',
@@ -79,7 +72,6 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-// POST /api/login – логін з урахуванням user_roles/roles
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body || {};
 
@@ -121,7 +113,6 @@ app.post('/api/login', async (req, res) => {
       return res.status(401).json({ error: 'Невірний email або пароль' });
     }
 
-    // витягаємо ролі з GROUP_CONCAT, наприклад "customer,admin"
     const roles = (dbUser.roles || '')
       .split(',')
       .map((r) => r.trim())
@@ -150,7 +141,6 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
-// GET /api/users – для адмінки (листинг)
 app.get('/api/users', async (req, res) => {
   try {
     const [rows] = await db.query(
@@ -177,10 +167,8 @@ app.get('/api/users', async (req, res) => {
 //       PRODUCTS
 // ======================
 
-// GET /api/products – список товарів
 app.get('/api/products', async (req, res) => {
   try {
-    // products: id, title, description, price, image, created_at, updated_at
     const [rows] = await db.query(
       'SELECT id, title, description, price, image FROM products ORDER BY id DESC'
     );
@@ -191,7 +179,6 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
-// GET /api/products/:id – один товар
 app.get('/api/products/:id', async (req, res) => {
   const id = Number(req.params.id);
   if (!id) {
@@ -215,7 +202,6 @@ app.get('/api/products/:id', async (req, res) => {
   }
 });
 
-// POST /api/products – створити товар
 app.post('/api/products', async (req, res) => {
   const { title, description, price, image } = req.body || {};
 
@@ -243,7 +229,6 @@ app.post('/api/products', async (req, res) => {
   }
 });
 
-// PUT /api/products/:id – оновити товар
 app.put('/api/products/:id', async (req, res) => {
   const id = Number(req.params.id);
   if (!id) {
@@ -274,7 +259,6 @@ app.put('/api/products/:id', async (req, res) => {
   }
 });
 
-// DELETE /api/products/:id – видалити товар
 app.delete('/api/products/:id', async (req, res) => {
   const id = Number(req.params.id);
   if (!id) {
@@ -302,7 +286,6 @@ app.delete('/api/products/:id', async (req, res) => {
 //        ORDERS
 // ======================
 
-// POST /api/orders – створити замовлення
 app.post('/api/orders', async (req, res) => {
   const { name, phone, email, address, items, userId } = req.body || {};
 
@@ -316,7 +299,6 @@ app.post('/api/orders', async (req, res) => {
       return sum + price;
     }, 0);
 
-    // orders: customer_name, total_amount, status, created_at
     const [result] = await db.query(
       `INSERT INTO orders
        (user_id, customer_name, phone, email, address, items_json, total_amount, status, created_at)
@@ -342,8 +324,6 @@ app.post('/api/orders', async (req, res) => {
   }
 });
 
-// GET /api/orders – список замовлень для адмінки
-// GET /api/orders – список замовлень для адмінки
 app.get('/api/orders', async (req, res) => {
   try {
     const [rows] = await db.query(
